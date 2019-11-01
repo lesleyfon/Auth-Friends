@@ -22,7 +22,6 @@ const Nav = styled.nav`
         justify-content: space-evenly;
         margin: 0 auto;
         padding: 20px;
-        /* text-decoration: none; */
         font-weight: bolder;
         text-transform: capitalize;
         font-size: 1.2rem;
