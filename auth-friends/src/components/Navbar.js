@@ -7,8 +7,8 @@ function Navbar() {
     return (
         <Nav>
             <Link to ='/'> home </Link>
-            <Link to ='/signin'> Sign in</Link>
-            <Link to ='/account'> Account </Link>
+            <Link to ='/login'> Sign in</Link>
+            <Link to ='/friends'> My Friends </Link>
             <Link to ='/signin'> Sign Out  </Link>
         </Nav>
     )
