@@ -4,18 +4,21 @@ import styled from 'styled-components'
 function Friends(props) {
     const [friends, setFriends] = React.useState([]);
     const   [isEdit, setIsEdit] = React.useState(false);
+    const [id, setId] = React.useState(0)
     React.useEffect(()=>{
         authWithAxios().get('/api/friends' )
             .then(res => {
                 setFriends(res.data)
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [isEdit])
 
     function editFriend(e){
         e.preventDefault()
         setIsEdit(true)
+    
     }
+   
     return (
         <div>
           {
@@ -26,13 +29,16 @@ function Friends(props) {
                     <h4> Age: {friend.age}  </h4>
                     <h5> email:  {friend.email} </h5>
                     <div className='editDelete' >
-                        <h6 onClick={editFriend}>Edit Friend</h6>
+                        <h6 onClick={e=>{
+                            editFriend(e)
+                            setId(friend.id)
+                            }} >Edit Friend</h6>
                         <h6>Delete Friend</h6>
                     </div>
                 </FriendDiv>)  
           }
           {
-              isEdit && <EditFriendForm setIsEdit={setIsEdit} />
+              isEdit && <EditFriendForm setIsEdit={setIsEdit} id ={id} history= {props.history}/>
           }
         </div>
     )
@@ -40,11 +46,13 @@ function Friends(props) {
 
 
 
-function EditFriendForm({setIsEdit}){
+function EditFriendForm({setIsEdit, id, history}){
 
     const [cred, setCred] = React.useState({
-        username: '',
-        password: ''
+        id: id,
+        name: '',
+        password: '', 
+        email:''
     })
     function handleChange(e){
         setCred({
@@ -53,19 +61,39 @@ function EditFriendForm({setIsEdit}){
         })
     }
     function close(e){
+        e.preventDefault()
         setIsEdit(false)
     }
+    function handleSubmit(e){
+        e.preventDefault()
+        authWithAxios().put(`/api/friends/${id}`, cred)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => console.log(err))
+        close(e)
+
+        history.push('/friends')
+    }
+
     return (
         <EditStyles>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className='close' > <h1 onClick={close}>Close</h1></div>
                
                 <input
                     type="text"
-                    name="username"
-                    value= {cred.userName}
+                    name="name"
+                    value= {cred.name}
                     onChange= { handleChange}
                     placeholder='Friend Name'
+                    />
+                    <input
+                    type="email"
+                    name="email"
+                    value= {cred.email}
+                    onChange= { handleChange}
+                    placeholder='Email'
                     />
                     <input
                     type="password"
