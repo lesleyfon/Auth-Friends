@@ -20,7 +20,14 @@ function Friends(props) {
                     <h3> Name: {friend.name} </h3>
                     <h4> Age: {friend.age}  </h4>
                     <h5> email:  {friend.email} </h5>
+                    <div className='editDelete' >
+                        <h6>Edit Friend</h6>
+                        <h6>Delete Friend</h6>
+                    </div>
                 </FriendDiv>)  
+          }
+          {
+              isEdit && EditFriendForm
           }
         </div>
     )
@@ -30,9 +37,31 @@ function Friends(props) {
 
 function EditFriendForm(){
 
+    const [cred, setCred] = React.useState({
+        username: '',
+        password: ''
+    })
+    function handleChange(e){
+        setCred({
+            ...cred,
+            [e.target.name]: e.target.value 
+        })
+    }
     return (
         <form>
-            
+            <input
+                type="text"
+                name="username"
+                value= {cred.userName}
+                onChange= { handleChange}
+                />
+                <input
+                type="password"
+                name="password"
+                value= {cred.password}
+                onChange= { handleChange}
+                
+                />
         </form>
     )
 }
@@ -56,4 +85,17 @@ const FriendDiv = styled.div`
     border: 1px solid lightgray;
     border-radius: 7px;
     margin-bottom: 15px;
+
+    .editDelete{
+        display: flex;
+        justify-content: space-between;
+        padding: 0px 30px;
+        color: lightcoral;
+        cursor: pointer;
+        &&:hover{
+            text-decoration: underline;
+        }
+
+    }
+
     `;
