@@ -6,10 +6,8 @@ function Navbar() {
 
     return (
         <Nav>
-            <Link to ='/'> home </Link>
             <Link to ='/login'> Sign in</Link>
             <Link to ='/friends'> My Friends </Link>
-            <Link to ='/signin'> Sign Out  </Link>
         </Nav>
     )
 }

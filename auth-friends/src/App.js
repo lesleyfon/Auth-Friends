@@ -18,6 +18,7 @@ function App() {
 
       <Private 
         path = '/friends'
+        exact
         component={Friends}/>
     </div>
   );

@@ -13,7 +13,6 @@ function Login(props) {
             .then(res=> {
                 localStorage.setItem('token', res.data.payload)
                 props.history.push('/friends')
-                console.log(props)
             })
             .catch(err=>console.log(err))
 

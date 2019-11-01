@@ -1,10 +1,20 @@
 import React from 'react';
-import axios from 'axios';
+import authWithAxios from './../utils/authWIthAxios';
 
 function Friends(props) {
+    const [friends, setFriends] = React.useState([]);
+    React.useEffect(()=>{
+        authWithAxios().get('/api/friends' )
+            .then(res => {
+                setFriends(res.data)
+            })
+            .catch(err => console.log(err))
+    }, [])
     return (
         <div>
-            Friends Component
+          {
+              (friends.length >= 1) && console.log(friends) 
+          }
         </div>
     )
 }
