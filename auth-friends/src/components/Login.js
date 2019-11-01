@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import authWithAxios from './../utils/authWIthAxios'
 
 function Login(props) {
-    const [credentials, setCredentials] = useState({
-        username:'',
-        password:''
-    });
+
 
     const [formError, setFormError] = useState('')
-    function handleChange(e){
-        setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
-        })
-    }
+
     function handleSubmit(e){
         e.preventDefault();
+        authWithAxios().post('/api/login', { username: 'Lambda School', password: 'i<3Lambd4' })
+            .then(res=> {
+                localStorage.setItem('token', res.data.payload)
+                props.history.push('/friends')
+                console.log(props)
+            })
+            .catch(err=>console.log(err))
 
     }
 
@@ -25,14 +25,14 @@ function Login(props) {
                 <input
                 type="text"
                 name="username"
-                value={credentials.username}
-                onChange={handleChange}
+                value= 'Lambda School'
+                disabled
                 />
                 <input
                 type="password"
                 name="password"
-                value={credentials.password}
-                onChange={handleChange}
+                value='i<3Lambd4'
+                disabled
                 />
                 <button>Signin</button>
             </Form>
