@@ -11,6 +11,11 @@ function Friends(props) {
             })
             .catch(err => console.log(err))
     }, [])
+
+    function editFriend(e){
+        e.preventDefault()
+        setIsEdit(true)
+    }
     return (
         <div>
           {
@@ -21,13 +26,13 @@ function Friends(props) {
                     <h4> Age: {friend.age}  </h4>
                     <h5> email:  {friend.email} </h5>
                     <div className='editDelete' >
-                        <h6>Edit Friend</h6>
+                        <h6 onClick={editFriend}>Edit Friend</h6>
                         <h6>Delete Friend</h6>
                     </div>
                 </FriendDiv>)  
           }
           {
-              isEdit && EditFriendForm
+              isEdit && <EditFriendForm setIsEdit={setIsEdit} />
           }
         </div>
     )
@@ -35,7 +40,7 @@ function Friends(props) {
 
 
 
-function EditFriendForm(){
+function EditFriendForm({setIsEdit}){
 
     const [cred, setCred] = React.useState({
         username: '',
@@ -47,22 +52,31 @@ function EditFriendForm(){
             [e.target.name]: e.target.value 
         })
     }
+    function close(e){
+        setIsEdit(false)
+    }
     return (
-        <form>
-            <input
-                type="text"
-                name="username"
-                value= {cred.userName}
-                onChange= { handleChange}
-                />
+        <EditStyles>
+            <form>
+                <div className='close' > <h1 onClick={close}>Close</h1></div>
+               
                 <input
-                type="password"
-                name="password"
-                value= {cred.password}
-                onChange= { handleChange}
-                
-                />
-        </form>
+                    type="text"
+                    name="username"
+                    value= {cred.userName}
+                    onChange= { handleChange}
+                    placeholder='Friend Name'
+                    />
+                    <input
+                    type="password"
+                    name="password"
+                    value= {cred.password}
+                    onChange= { handleChange}
+                    placeholder='Password'
+                    />
+                     <button>Signin</button>
+            </form>
+        </EditStyles>
     )
 }
 
@@ -95,7 +109,38 @@ const FriendDiv = styled.div`
         &&:hover{
             text-decoration: underline;
         }
-
     }
 
     `;
+
+const EditStyles = styled.div`
+    width: 100vw;
+    height: 100vh;
+    background: transparent;
+    form{
+        background: #ffff;
+        width: 400px;
+        display: flex;
+        margin: 10% auto;
+        flex-direction: column;
+        padding: 100px 30px;
+        border: 1px solid lightgray;
+        border-radius: 8px;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        h1{
+            float: right;
+            background: #ffffff;
+        }
+        input, button{
+            height: 25px;
+            border-radius: 5px;
+            border: 1px solid lightgray;   
+            margin-bottom: 35px;
+            border-radius: 25px;
+            padding-left: 50px;
+            }
+        }
+`;
