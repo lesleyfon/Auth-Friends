@@ -11,12 +11,20 @@ function Friends(props) {
                 setFriends(res.data)
             })
             .catch(err => console.log(err))
-    }, [isEdit])
+    }, [isEdit, id])
 
     function editFriend(e){
         e.preventDefault()
         setIsEdit(true)
-    
+        
+    }
+    function deleteFriend(e, id){
+        e.preventDefault()
+        authWithAxios().delete(`/api/friends/${id}`)
+        .then(res => {
+            setFriends(res.data)
+        })
+        .catch(err => console.log(err))
     }
    
     return (
@@ -33,7 +41,9 @@ function Friends(props) {
                             editFriend(e)
                             setId(friend.id)
                             }} >Edit Friend</h6>
-                        <h6>Delete Friend</h6>
+                        <h6 onClick={e=>{
+                            deleteFriend(e, friend.id)
+                        }}>Delete Friend</h6>
                     </div>
                 </FriendDiv>)  
           }
@@ -69,11 +79,10 @@ function EditFriendForm({setIsEdit, id, history}){
         authWithAxios().put(`/api/friends/${id}`, cred)
         .then(res => {
             console.log(res.data)
+            
         })
         .catch(err => console.log(err))
         close(e)
-
-        history.push('/friends')
     }
 
     return (
