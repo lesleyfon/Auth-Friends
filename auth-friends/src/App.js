@@ -5,6 +5,7 @@ import { Route } from 'react-router-dom';
 import Login from './components/Login';
 import Private from './components/Private';
 import Friends from './components/Friends';
+import AddFriend from './components/AddFriend'
 
 function App() {
   return (
@@ -20,6 +21,10 @@ function App() {
         path = '/friends'
         exact
         component={Friends}/>
+      <Private 
+        path = '/addfriend'
+        exact
+        component={AddFriend}/>
     </div>
   );
 }

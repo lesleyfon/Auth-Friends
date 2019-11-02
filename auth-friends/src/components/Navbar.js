@@ -8,6 +8,7 @@ function Navbar() {
         <Nav>
             <Link to ='/login'> Sign in</Link>
             <Link to ='/friends'> My Friends </Link>
+            <Link to ='/addfriend'>Add a friend </Link>
         </Nav>
     )
 }
